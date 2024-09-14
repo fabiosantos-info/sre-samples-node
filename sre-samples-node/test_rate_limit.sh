@@ -16,9 +16,17 @@ counter=0
 echo "Fazendo chamadas para tentar superar 100 chamadas em 60 segundos..."
 start_time=$(date +%s)
 while true; do
-    make_request
+    RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "$URL")
     counter=$((counter + 1))
-    echo "Chamadas realizadas: $counter"
+    
+    if [ "$RESPONSE" -eq 429 ]; then
+        echo "Você excedeu o limite de requisições, por gentileza tente mais tarde!"
+        break
+    else
+        echo "Status HTTP: $RESPONSE"
+        echo "Chamadas realizadas: $counter"
+    fi
+    
     current_time=$(date +%s)
     elapsed_time=$((current_time - start_time))
     if [ $elapsed_time -ge 60 ]; then
