@@ -27,7 +27,7 @@ async function externalService() {
     return new Promise((resolve) => {
         setTimeout(() => {
             resolve('Resposta da chamada externa');
-        }, 5000); 
+        }, 7000); 
     });
 }
 
@@ -39,7 +39,7 @@ app.get('/api/health', (req, res) => {
 // Rota que faz a chamada simulada com timeout
 app.get('/api/timeout', async (req, res) => {
     try {
-        const result = await timeoutPromise(4500, externalService());
+        const result = await timeoutPromise(6000, externalService());
         res.send(result);
     } catch (error) {
         res.status(500).send(`Erro: ${error.message}`);

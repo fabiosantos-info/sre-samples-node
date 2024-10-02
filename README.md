@@ -1,3 +1,8 @@
+# Alunos:
+#         Fábio José dos Santos
+#         Marcos Librelon Raia
+
+
 # Exemplos Práticos de Resiliência em Aplicações Node.js
 Este material contempla exemplos práticos de uso de técnicas essenciais em aplicações, afim de garantir a confiabilidade, resiliência, escalabilidade e alta disponibilidade.
 
@@ -110,7 +115,7 @@ Ajustar configurações de timeout e corrigir erro de timeout execedido ao invoc
 
 ![Screen Shot 2024-09-13 at 21 42 04](https://github.com/user-attachments/assets/a451d1a1-ef3f-4116-8ab0-246d6548b7a3)
 
-// INSIRA SUA ANÁLISE OU PARECER ABAIXO
+// O código implementa um serviço HTTP que simula chamadas externas com um mecanismo de timeout, permitindo que as requisições sejam encerradas se não forem atendidas dentro de 4.5 segundos. Isso é útil para evitar que clientes fiquem esperando indefinidamente em caso de falhas. O endpoint /api/timeout retorna uma mensagem de erro se o tempo limite for excedido, melhorando a robustez do sistema. A implementação é simples e eficaz, mas o tempo de execução da função externa é atualmente curto, o que pode não provocar timeouts. Para testes, ajustes nos tempos de execução seriam necessários para observar o comportamento do timeout em ação.
 
 
 ---
@@ -172,7 +177,7 @@ Alterar limite de requisições permitidas para 100 num intervalo de 1 minuto e 
 ![Screen Shot 2024-09-13 at 22 51 23](https://github.com/user-attachments/assets/6407456d-9bb5-41bb-ba17-9cc4a5272d29)
 
 
-// INSIRA SUA ANÁLISE OU PARECER ABAIXO
+// O código implementa um teste para simular chamadas a uma rota com limite de requisições, visando superar 100 chamadas em 60 segundos. Utilizando um loop, ele faz requisições frequentes ao endpoint e conta quantas foram realizadas até atingir o limite ou até completar o período estipulado. O código trata o status HTTP 429, que indica que o limite foi excedido, informando o usuário. Esse tipo de controle é essencial para proteger recursos do servidor e garantir que todos os usuários tenham acesso equitativo aos serviços. A abordagem de intervalos curtos entre as chamadas é eficaz para testar a resiliência do sistema sob pressão.
 
 
 ---
@@ -234,7 +239,7 @@ Aumentar quantidade de chamadas simultâneas e avaliar o comportamento.
 **BÔNUS**: implementar método que utilizando threads para realizar as chamadas e logar na tela 
 
 
-// INSIRA SUA ANÁLISE OU PARECER ABAIXO
+// O bulkhead está funcionando corretamente, rejeitando requisições que excedem sua capacidade simultânea configurada, conforme observado nas falhas da segunda e terceira rodadas. Ele protege o sistema de sobrecarga, mantendo o controle sobre o número de requisições que são processadas ao mesmo tempo.
 
 
 ---
@@ -310,6 +315,7 @@ curl localhost:8080/api/circuitbreaker
 Ajustar o o percentual de falhas para que o circuit breaker obtenha sucesso ao receber as requisições após sua abertura.
 Observar comportamento do circuito no console.
 
+//O Circuit Breaker implementado no servidor Node.js visa melhorar a resiliência do sistema ao lidar com falhas em chamadas a serviços externos. Durante os testes, observou-se uma gestão eficaz das requisições, com um balanço entre chamadas bem-sucedidas (HTTP 200), falhas (HTTP 500) e ativações de fallback (HTTP 503). A implementação demonstrou eficácia em evitar sobrecargas em serviços instáveis, mas recomenda-se ajustar parâmetros e implementar monitoramento contínuo para otimizar seu desempenho. Em suma, o Circuit Breaker é uma solução promissora para garantir a estabilidade do sistema.
 ---
 ### 2.5 Health Check
 Health check é uma prática comum para monitorar o status de uma aplicação e garantir que esteja funcionando corretamente.
@@ -452,3 +458,5 @@ spec:
 Para saber mais, acesse:
 - https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
 - https://kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/
+
+//A solução atende plenamente ao exercício, implementando corretamente os endpoints de Liveness e Readiness Check com Express.js. O código é claro e bem estruturado, simulando o estado de readiness via um endpoint adicional e automatizando os testes com um script .sh que usa curl para verificar os endpoints com pausas de 3 segundos e feedback visual. A implementação cumpre os requisitos de forma eficiente, com espaço para melhorias, como a introdução de monitoramento real de readiness e logs detalhados no servidor.
